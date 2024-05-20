@@ -9,7 +9,7 @@
         mkdirp = require("mkdirp"),
         path = require("path"),
         Handlebars = require("handlebars"),
-        SourceMap = require('handlebars/node_modules/source-map'),
+        SourceMap = require('source-map'),
         SourceMapConsumer = SourceMap.SourceMapConsumer,
         SourceNode = SourceMap.SourceNode
         ;
