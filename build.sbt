@@ -1,24 +1,23 @@
 sbtPlugin := true
 
-organization := "com.bicou.sbt"
+organization := "com.andeno"
 
-name := "sbt-hbs"
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-hbs",
+    scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false
+  )
 
-scalaVersion := "2.12.4"
-
-resolvers += Resolver.typesafeRepo("releases")
+scalaVersion := "2.12.19"
 
 libraryDependencies ++= Seq(
   "org.webjars" % "mkdirp" % "0.5.0"
 )
 
-addSbtPlugin("com.typesafe.sbt" %% "sbt-js-engine" % "1.2.2")
-
-publishMavenStyle := false
+addSbtPlugin("com.github.sbt" %% "sbt-js-engine" % "1.3.6")
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
-
-scriptedBufferLog := false
-
-scriptedLaunchOpts += ("-Dproject.version=" + version.value )
-
