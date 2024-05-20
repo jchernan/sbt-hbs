@@ -49,7 +49,7 @@ object SbtHbs extends AutoPlugin {
       "amd" -> JsBoolean(amd.value),
       "commonjs" -> JsString(commonjs.value),
       "handlebarPath" -> JsString(handlebarPath.value),
-      "known" -> JsArray(known.value.toList.map(JsString(_))),
+      "known" -> JsArray(known.value.toList.map(JsString(_)) : _*),
       "knownOnly" -> JsBoolean(knownOnly.value),
       "namespace" -> JsString(namespace.value),
       "root" -> JsString(root.value),
@@ -81,12 +81,12 @@ object SbtHbs extends AutoPlugin {
         moduleName := "hbs",
         shellFile := getClass.getClassLoader.getResource("handlebars-shell.js"),
 
-        taskMessage in Assets := "Handlebars compiling",
-        taskMessage in TestAssets := "Handlebars test compiling"
+        Assets / taskMessage := "Handlebars compiling",
+        TestAssets / taskMessage := "Handlebars test compiling"
       )
   ) ++ SbtJsTask.addJsSourceFileTasks(hbs) ++ Seq(
-    hbs in Assets := (hbs in Assets).dependsOn(nodeModules in Assets).value,
-    hbs in TestAssets := (hbs in TestAssets).dependsOn(nodeModules in TestAssets).value
+    Assets / hbs := (Assets / hbs).dependsOn(Assets / nodeModules).value,
+    TestAssets / hbs := (TestAssets / hbs).dependsOn(TestAssets / nodeModules).value
   )
 
 }
