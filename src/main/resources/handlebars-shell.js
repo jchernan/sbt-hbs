@@ -6,7 +6,6 @@
 
     var args = process.argv,
         fs = require("fs"),
-        mkdirp = require("mkdirp"),
         path = require("path"),
         Handlebars = require("handlebars"),
         SourceMap = require('source-map'),
@@ -49,7 +48,7 @@
       var root = path.join(base, options.root);
       var partial = path.basename(input).match(/^_/);
 
-      mkdirp(path.dirname(output), function (e) {
+      fs.mkdir(path.dirname(output), { recursive: true }, function (e) {
         throwIfErr(e);
 
         try {
